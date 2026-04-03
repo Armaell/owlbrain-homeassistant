@@ -1,0 +1,47 @@
+{
+  "name": "owlbrain-homeassistant",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "example": "tsx scripts/run-example.ts"
+  },
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/armaell/owlbrain-homeassistant.git"
+	},
+	"homepage": "https://github.com/armaell/owlbrain-homeassistant#readme",
+	"keywords": ["owlbrain", "typescript"],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.0"
+  },
+  "dependencies": {
+    "home-assistant-js-websocket": "^9.6.0",
+    "owlbrain-core": "^0.1.0",
+    "ws": "^8.20.0",
+    "zod": "^4.3.6"
+  }
+}
