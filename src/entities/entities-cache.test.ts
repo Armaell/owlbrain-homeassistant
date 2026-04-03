@@ -49,8 +49,15 @@ describe("EntitiesCache", () => {
 				makeState("sensor.temp")
 			],
 			[
-				makeReg("light.kitchen", { device_id: "devA", area_id: "kitchen" }),
-				makeReg("light.living", { device_id: "devB", area_id: "living" }),
+				makeReg("light.kitchen", {
+					device_id: "devA",
+					area_id: "kitchen",
+					labels: ["thermal"]
+				}),
+				makeReg("light.living", {
+					device_id: "devB",
+					area_id: "living"
+				}),
 				makeReg("sensor.temp", { device_id: "devA", area_id: "kitchen" })
 			],
 			[makeArea("kitchen"), makeArea("living")]
@@ -104,6 +111,12 @@ describe("EntitiesCache", () => {
 				name: "empty target always true",
 				entityId: "unknown.entity",
 				target: {},
+				expected: true
+			},
+			{
+				name: "match by label_id",
+				entityId: "light.kitchen",
+				target: { label_id: "thermal" },
 				expected: true
 			},
 			{

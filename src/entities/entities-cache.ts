@@ -98,7 +98,7 @@ export class EntitiesCache {
 			const ids = Array.isArray(target.label_id)
 				? target.label_id
 				: [target.label_id]
-			ok ||= ids.some((id) => cachedEntity.labels.includes(id))
+			ok ||= ids.some((id) => cachedEntity.labels?.includes(id))
 		}
 
 		if (target.floor_id) {

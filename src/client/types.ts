@@ -71,7 +71,7 @@ export interface EntityRegistryEntry {
 	device_id: string | null
 	area_id: string | null
 	floor_id: string | null
-	labels: string[]
+	labels?: string[]
 	name: string | null
 	original_name: string | null
 }
