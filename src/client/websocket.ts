@@ -116,7 +116,8 @@ export class HomeAssistantWebsocket {
 			domain: args.domain,
 			service: args.service,
 			service_data: args.data,
-			target: args.target
+			target: args.target,
+			return_response: args.return_response
 		})
 	}
 }

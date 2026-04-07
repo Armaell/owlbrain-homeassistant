@@ -101,6 +101,7 @@ export interface ActionCall {
 	service: string
 	data?: Record<string, unknown>
 	target: HassServiceTarget
+	return_response?: boolean
 }
 
 export interface HaManagedEntity {
