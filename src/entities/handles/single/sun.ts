@@ -58,15 +58,29 @@ export class SunEntity extends BaseEntityHandle<SunState> {
 	}
 
 	private isBefore(time?: string): boolean | undefined {
-		const target = this.parseTime(time)
-		if (!target) return undefined
-		return new Date() < target
+		if (!time) return undefined
+
+		const next = new Date(time)
+		const now = new Date()
+
+		if (next.getDate() !== now.getDate()) {
+			return false
+		}
+
+		return now < next
 	}
 
 	private isAfter(time?: string): boolean | undefined {
-		const target = this.parseTime(time)
-		if (!target) return undefined
-		return new Date() > target
+		if (!time) return undefined
+
+		const next = new Date(time)
+		const now = new Date()
+
+		if (next.getDate() !== now.getDate()) {
+			return true
+		}
+
+		return now > next
 	}
 
 	get isBeforeDawn(): boolean | undefined {
