@@ -16,6 +16,7 @@ export const EntityDecoratorConfigSchema = z
 		label_id: z.union([z.string(), z.array(z.string())]),
 
 		namespace: z.string(),
+		name: z.string(),
 		injectableAs: InjectableAsSchema
 	})
 	.partial()

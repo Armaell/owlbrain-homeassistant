@@ -14,6 +14,7 @@ import {
 
 export interface HomeAssistantIntegrationConfig extends ClientConfig {
 	/**
+	 * Unique integration name. Change it to a unique value if you wish to use multiple HttpIntegration
 	 * @default "homeassistant"
 	 */
 	name?: string

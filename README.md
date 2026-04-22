@@ -5,121 +5,18 @@ This integration connects OwlBrain scripts to your Home Assistant instance, allo
 
 ## Features
 
-### @EntityScript script decorator
-Use `@EntityScript()` on a script class to configure:
+- **[HA service calls](./docs/decorators/utility/inject.md)** — Trigger home assistant actions
+- **[Entity handles](./docs/decorators/utility/only-if.md)** — Easy access to entities state, attributes and actions
+- **[Managed entities](./docs/decorators/utility/only-if.md)** — Using the companion app, create virtual entities controlled from owlbrain
+- **[Entity Target](./docs/decorators/utility/delay.md)** — How to select entities
 
-- a default target for the script, you can use the whole [EntityTarget](#entity-target) selector.
-- all the other options of the `@Script()` decorator
+## List of provided decorators
+### Script
+- **[@EntityScript](./docs/decorators/scripts/entity-script.md)** — Apply default entity to the script's events handlers
+### Events
+- **[@OnStateChanged](./docs/decorators/events/on-state-changed.md)** — React to entity state change
+- **[@OnZoneChanged](./docs//decorators/events/on-zone-changed.md)** — React to entity zone change
 
-```ts
-@EntityScript({
-  entity_id: "light.kitchen",
-})
-export class LightsAutomation {
-  // all events handlers will listen to "light.kitchen" by default
-}
-```
-
-> [!NOTE]
-> The particular decorator is optional and only serves to configure script-wide parameters. In most case the default `@Script()` class decorator is enough.
-
-### @OnStateChanged() event decorator
-Allow to listen to state changes on a entity
-```ts
-@OnStateChanged({
-  entity_id: "light.kitchen",
-  from: "on",
-  to: "off"
-})
-```
-This example will call the decorated method only when the "light.kitchen" goes from "on" to "off".
-
-You can use the whole [EntityTarget](#entity-target) to select which entity to react to.
-
-### @OnZoneChanged() event decorator
-Allow to listen to state changes on a entity
-```ts
-@OnZoneChanged({
-  entity_id: "person.alex",
-  from: "on",
-  to: "off"
-})
-```
-This example will call the decorated method only when the "light.kitchen" goes from "on" to "off".
-
-You can use the whole [EntityTarget](#entity-target) to select which entity to react to.
-
-### Calling Home Assistant services
-You can call HA services using the provided client:
-
-```ts
-homeAssistant = container.resolve<HomeAssistantClient>([
-  "homeassistant",
-  "client"
-])
-await this.homeAssistant.action({
-  domain: "light",
-  service: "turn_on",
-  target: { entity_id: "light.kitchen" }
-})
-```
-
-target is of type [EntityTarget](#entity-target)
-
-### Use entity handles
-Utility classes are available for most common entity types: `buttonEntity`, `climateEntity`, `coverEntity`, `entity`, `lightEntity`, `lockEntity`, `mediaPlayerEntity`,`personEntity`, `sensorEntity`, `binarySensorEntity`, `sunEntity`, `switchEntity`, `vacuumEntity`.
-
-They allow to make simpler service calls:
-
-```ts
-const light = lightEntity("light.kitchen")
-light.turnOn()
-```
-
-It also exist handles for multiple entities that takes a [EntityTarget](#entity-target) as selector: `buttonsEntities`, `climatesEntities`, `coversEntities`, `entities`, `lightsEntities`, `locksEntities`, `mediaPlayersEntities`,`personsEntities`, `sensorsEntities`, `binarySensorsEntities`, `switchesEntities`, `vacuumEntities`.
-
-### Managed entities
-
-You can create entities in Home Assistant from your owlbrain script using the [companion app](https://github.com/Armaell/owlbrain-homeassistant-companion).
-
-Once installed you can create entities like this:
-```ts
-HomeAssistantIntegration({
-    ...,
-    managed: [
-      {
-        entity_id: "select.word",
-        name: "Please select the word of the day:",
-        options: ["Hi", "Salut", "Hola", "Hei", "Namaste", "Osu"]
-      },
-      {
-        device_id: "some_device",
-        name: "Big device",
-        entities: [
-          {
-            entity_id: "sensor.super",
-            name: "My super sensor"
-          }
-        ]
-      }
-    ]
-  })
-```
-Then to set the state, you can use an handle like `managedSensorEntity`, `managedBinarySensorEntity`, `managedSwitchEntity`
-
-Those are the same handles than single entity handle, but also exposes a `setState()` function.
-
-### Entity Target
-You can target entities either directly by their entity_id, or by some other information:
-```ts
-type EntityTarget = {
-    area_id?: string | string[];
-    device_id?: string | string[];
-    entity_id?: string | string[];
-    floor_id?: string | string[];
-    label_id?: string | string[];
-}
-```
 ## Quickstart
 
 ### Install
