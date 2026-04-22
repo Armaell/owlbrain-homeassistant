@@ -41,7 +41,7 @@ export abstract class BaseEntityHandle<STATE = void> {
 		this.cache = container.resolve([this.namespace, "entity", "cache"])
 	}
 
-	static fromScriptInstance(scriptInstance: unknown) {
+	static fromScriptInstance(scriptInstance: any) {
 		const scriptData = scriptInstance["scriptData"]
 		const namespace = scriptData?.["namespace"] ?? DEFAULT_NAMESPACE
 		const scriptEntityId = scriptData?.["entity_id"]
@@ -69,7 +69,7 @@ export abstract class BaseEntityHandle<STATE = void> {
 
 	get state(): STATE | undefined {
 		const state = this.status
-		return state?.state
+		return state?.state as STATE | undefined
 	}
 
 	is(stateValue: STATE): boolean {

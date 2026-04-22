@@ -2,7 +2,7 @@ import { Logger, container } from "owlbrain-core"
 import type { HomeAssistantWebsocket } from "../../../client/websocket"
 import type { ManagedRegistry } from "../../managed-registry"
 
-type Constructor<T = {}> = new (...args: any[]) => T
+type Constructor<T = object> = new (...args: any[]) => T
 
 interface PublicBaseEntityHandle {
 	namespace: string

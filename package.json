@@ -12,17 +12,21 @@
     "build": "tsup",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "example": "tsx scripts/run-example.ts"
+    "example": "tsx scripts/run-example.ts",
+    "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/armaell/owlbrain-homeassistant.git"
-	},
-	"homepage": "https://github.com/armaell/owlbrain-homeassistant#readme",
-	"keywords": ["owlbrain", "typescript"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/armaell/owlbrain-homeassistant.git"
+  },
+  "homepage": "https://github.com/armaell/owlbrain-homeassistant#readme",
+  "keywords": [
+    "owlbrain",
+    "typescript"
+  ],
   "files": [
     "dist",
-		"docs"
+    "docs"
   ],
   "exports": {
     ".": {

@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import { createTestHarness } from "owlbrain-core/test"
 import { entities } from "./entities"
 import { container } from "owlbrain-core"
-import { services } from "home-assistant-js-websocket/dist/messages.js"
 import { InvalidTargetError } from "../../../errors"
 
 describe("Entities", () => {

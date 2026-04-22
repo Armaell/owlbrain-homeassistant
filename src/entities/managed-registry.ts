@@ -14,7 +14,7 @@ export type OwlManagedConfig =
 	  })
 
 export class ManagedRegistry {
-	private logger: Logger
+	private readonly logger: Logger
 
 	private devices = new Map<string, CompanionUpsertDevice>()
 	private entities = new Map<string, CompanionUpsertEntity>()
@@ -31,7 +31,7 @@ export class ManagedRegistry {
 				continue
 			}
 
-			if ("device_id" in config && "entities" in config) {
+			if ("device_id" in config && "entities" in config && config.device_id) {
 				this.devices.set(config.device_id, config as CompanionUpsertDevice)
 				this.unsynced.add({ id: config.device_id, type: "device" })
 
@@ -59,15 +59,16 @@ export class ManagedRegistry {
 			try {
 				if (type === "entity") {
 					const entity = this.entities.get(id)
+					if (!entity) continue
 					const result = await this.websocket?.companion?.upsertEntity(entity)
-					if (result.action === "created") {
+					if (result?.action === "created") {
 						this.logger.debug("Created entity", entity.entity_id)
 						if (result.data.id !== entity.entity_id)
 							this.logger.warn(
 								`Could not secure the requested entity_id ${entity.entity_id}. Got ${result.data.id} instead`
 							)
 						this.unsynced.delete(entry)
-					} else if (result.action === "updated") {
+					} else if (result?.action === "updated") {
 						this.unsynced.delete(entry)
 					} else {
 						this.logger.warn("Unknown response from the websocket", result)
@@ -75,11 +76,12 @@ export class ManagedRegistry {
 				}
 				if (type === "device") {
 					const device = this.devices.get(id)
+					if (!device) continue
 					const result = await this.websocket?.companion?.upsertDevice(device)
-					if (result.action === "created") {
+					if (result?.action === "created") {
 						this.logger.debug("Created device", device.device_id)
 						this.unsynced.delete(entry)
-					} else if (result.action === "updated") {
+					} else if (result?.action === "updated") {
 						this.unsynced.delete(entry)
 					} else {
 						this.logger.warn("Unknown response from the websocket", result)

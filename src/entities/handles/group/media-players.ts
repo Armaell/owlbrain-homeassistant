@@ -17,7 +17,7 @@ export function mediaPlayerEntities(
 
 type MediaPlayerState = "playing" | "paused" | "idle" | "off"
 
-export class MediaPlayerEntities extends BaseEntitiesHandle {
+export class MediaPlayerEntities extends BaseEntitiesHandle<MediaPlayerState> {
 	constructor(ref: EntitiesRef) {
 		super(ref)
 	}

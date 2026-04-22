@@ -39,16 +39,19 @@ export class EntitiesCache {
 		for (const a of areas) this.areas.set(a.area_id, a)
 	}
 
-	get(entity_id: string): HAEntity {
+	get(entity_id: string): HAEntity | undefined {
 		const state = this.states.get(entity_id)
 		const entity = this.entities.get(entity_id)
-		const area = entity ? this.areas.get(entity?.area_id) : undefined
-		return { ...entity, ...state, area }
+		if (!state && !entity) return undefined
+
+		const area = entity?.area_id ? this.areas.get(entity.area_id) : undefined
+		return { ...entity, ...state, area } as HAEntity
 	}
 
 	*values(): Iterable<HAEntity> {
 		for (const entityId of this.entities.keys()) {
-			yield this.get(entityId)
+			const ent = this.get(entityId)
+			if (ent) yield ent
 		}
 	}
 
@@ -105,7 +108,8 @@ export class EntitiesCache {
 			const ids = Array.isArray(target.floor_id)
 				? target.floor_id
 				: [target.floor_id]
-			ok ||= ids.includes(cachedEntity.area.floor_id)
+			const floorId = cachedEntity.area?.floor_id
+			ok ||= floorId != null && ids.includes(floorId)
 		}
 
 		this.matchesCache.set(cacheKey, ok)

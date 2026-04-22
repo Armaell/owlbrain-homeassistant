@@ -1,4 +1,4 @@
-import { Logger, container } from "owlbrain-core"
+import { container } from "owlbrain-core"
 import type { HomeAssistantClient } from "../../../client/client"
 import type { EntitiesCache } from "../../entities-cache"
 import { type EntityTarget, EntityTargetSchema } from "../../types"
@@ -37,7 +37,7 @@ export abstract class BaseEntitiesHandle<STATE = void> {
 		])
 	}
 
-	static fromScriptInstance(scriptInstance: unknown): EntitiesRef {
+	static fromScriptInstance(scriptInstance: any): EntitiesRef {
 		const scriptData = scriptInstance["scriptData"]
 
 		const area_id = scriptData?.["area_id"]
@@ -123,7 +123,7 @@ export abstract class BaseEntitiesHandle<STATE = void> {
 		return new Map(
 			this.cache
 				.resolveTarget(this.target)
-				.map((entity) => [entity.entity_id, entity.attributes[attributeName]])
+				.map((entity) => [entity.entity_id, entity.attributes?.[attributeName]])
 		)
 	}
 }

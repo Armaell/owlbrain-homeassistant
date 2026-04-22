@@ -16,7 +16,7 @@ export class HomeAssistantClient {
 				return_response: this.servicesRequiringReturnTrue.has(args.service),
 				...args
 			})
-		} catch (e) {
+		} catch (e: any) {
 			if (
 				e.code === "service_validation_error" &&
 				e.translation_key === "service_lacks_response_request"

@@ -20,7 +20,7 @@ import { WebsocketToCompanion } from "./websocket-to-companion"
 
 export class HomeAssistantWebsocket {
 	private _conn: Connection | null = null
-	private logger: Logger
+	private readonly logger: Logger
 	private eventsHandlers: WebsocketEventsHandler
 	private _companion?: WebsocketToCompanion
 

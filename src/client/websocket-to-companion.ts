@@ -27,7 +27,7 @@ export class WebsocketToCompanion {
 	): Promise<R> {
 		try {
 			return await this.conn.sendMessagePromise(...args)
-		} catch (e) {
+		} catch (e: any) {
 			if (e.code === "unknown_command")
 				throw new CompanionNotAvailableError({ namespace: [this.config.name] })
 			throw e
